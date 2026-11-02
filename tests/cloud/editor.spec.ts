@@ -5,6 +5,8 @@ const seed: { records: Archive[] } = JSON.parse(
   readFileSync("data/archives.seed.json", "utf8"),
 );
 
+const publicSite = JSON.parse(readFileSync("config/public-site.json", "utf8"));
+
 // Browser-to-API contract tests with mocked HTTP. Real RLS is tested separately;
 // these tests don't claim a live Supabase project has been connected.
 test("cloud editor creates drafts, publishes, exports, imports, and deletes", async ({
@@ -23,7 +25,7 @@ test("cloud editor creates drafts, publishes, exports, imports, and deletes", as
     created_at: new Date().toISOString(),
   };
   const token = `${Buffer.from(JSON.stringify({ alg: "HS256", typ: "JWT" })).toString("base64url")}.${Buffer.from(JSON.stringify({ sub: uid, role: "authenticated", aud: "authenticated", exp: Math.floor(Date.now() / 1000) + 3600 })).toString("base64url")}.browser-test-signature`;
-  await page.route("https://atlas-test.supabase.co/**", async (route) => {
+  await page.route(`${publicSite.supabaseUrl}/**`, async (route) => {
     const r = route.request(),
       url = new URL(r.url()),
       method = r.method();
@@ -92,6 +94,8 @@ test("cloud editor creates drafts, publishes, exports, imports, and deletes", as
   });
   page.on("dialog", (d) => d.accept());
   await page.goto("/#/admin");
+  await expect(page.locator(".demo-banner")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "进入工作室" })).toBeVisible();
   await page.getByLabel("邮箱", { exact: true }).fill("admin@example.test");
   await page.getByLabel("密码", { exact: true }).fill("only-a-test-password");
   await page.getByRole("button", { name: "进入工作室" }).click();
@@ -146,7 +150,7 @@ test("cloud editor creates drafts, publishes, exports, imports, and deletes", as
 });
 
 test("cloud failures never fall back to bundled drafts", async ({ page }) => {
-  await page.route("https://atlas-test.supabase.co/**", (route) =>
+  await page.route(`${publicSite.supabaseUrl}/**`, (route) =>
     route.fulfill({
       status: 403,
       contentType: "application/json",

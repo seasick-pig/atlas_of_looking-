@@ -4,7 +4,9 @@ Workers 也支持静态站点，不必为本网站重建 Pages 项目。仓库�
 
 ## 当前项目的设置
 
-打开 Workers & Pages → atlas-of-looking → **Settings → Build**。找到 **Build variables and secrets**（或 Build variables），添加以下构建变量：
+本网站已在 `config/public-site.json` 保存用户提供的 Supabase 项目 URL 与浏览器公开密钥。未填写构建变量时也会连接该项目，并显示管理员登录表单；不会自动变为本地预览。
+
+只有需要覆盖默认项目时，才打开 Workers & Pages → atlas-of-looking → **Settings → Build**，添加成对的构建变量：
 
 | 名称                            | 内容                            |
 | ------------------------------- | ------------------------------- |
@@ -23,7 +25,7 @@ Workers 也支持静态站点，不必为本网站重建 Pages 项目。仓库�
 | Root directory    | `/`，仓库根目录       |
 | Production branch | `main`                |
 
-`build:cloud` 在缺少公开数据库配置时会停止构建，避免将本地演示档案发布为正式资料。Wrangler 使用锁文件中的版本，配置中的 Worker 名称是 `atlas-of-looking`，对应当前项目名称。如使用其他 Worker 名称，需同步调整配置。
+`build:cloud` 使用统一的构建和浏览器连接配置，拒绝私密密钥、成对覆盖缺项及演示模式。无构建变量时会使用默认公开配置，正式产物不包含演示档案。Wrangler 使用锁文件中的版本，配置中的 Worker 名称是 `atlas-of-looking`，对应当前项目名称。如使用其他 Worker 名称，需同步调整配置。
 
 保存后，回到 **Deployments** 对最新 `main` 提交发起构建。GitHub 集成也可能在提交推送后自动触发；需确认构建使用的是最新包含 `wrangler.jsonc` 的提交。若 Retry build 仅重试旧提交，请从项目的 Deployments 页面选择基于最新 `main` 的部署。
 

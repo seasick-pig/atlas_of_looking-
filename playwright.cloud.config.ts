@@ -16,8 +16,11 @@ export default defineConfig({
     command: "npm run dev -- --port 5174 --strictPort",
     url: "http://127.0.0.1:5174",
     env: {
-      VITE_SUPABASE_URL: "https://atlas-test.supabase.co",
-      VITE_SUPABASE_PUBLISHABLE_KEY: "sb_publishable_test_browser_only",
+      // Regression: the actual site must show cloud login with no build variables.
+      // Every API call is intercepted by the tests; the live project isn't contacted.
+      VITE_SUPABASE_URL: "",
+      VITE_SUPABASE_PUBLISHABLE_KEY: "",
+      VITE_ATLAS_DEMO: "false",
     },
     reuseExistingServer: false,
   },

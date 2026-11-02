@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests/browser",
+  outputDir: "test-results/public",
   fullyParallel: true,
   workers: 2,
   use: {
@@ -29,7 +30,11 @@ export default defineConfig({
     command: "npm run dev -- --port 5173 --strictPort",
     url: "http://127.0.0.1:5173",
     // Always isolate the public demo suite from an operator's live project.
-    env: { VITE_SUPABASE_URL: "", VITE_SUPABASE_PUBLISHABLE_KEY: "" },
+    env: {
+      VITE_SUPABASE_URL: "",
+      VITE_SUPABASE_PUBLISHABLE_KEY: "",
+      VITE_ATLAS_DEMO: "true",
+    },
     reuseExistingServer: false,
   },
 });

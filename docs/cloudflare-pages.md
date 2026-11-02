@@ -23,7 +23,7 @@ Pages 会安装 npm 依赖；仓库提供锁文件，不需要填写 Worker depl
 
 ## 配置构建环境变量
 
-在首次构建前，为 Production 添加以下变量。如果开启 Preview 部署，也应给 Preview 设置对应变量。更改变量后需要重新构建。
+本网站默认使用 `config/public-site.json` 中的浏览器公开连接配置，下面两项 `VITE_*` 变量仅用于成对覆盖为另一个项目。建议设置 `NODE_VERSION=24`。如果开启 Preview 部署并希望使用不同数据库，应为 Preview 成对提供覆盖值。更改配置后需要重新构建。
 
 | 变量名                          | 值                                |
 | ------------------------------- | --------------------------------- |
@@ -33,7 +33,7 @@ Pages 会安装 npm 依赖；仓库提供锁文件，不需要填写 Worker depl
 
 URL 与 publishable key 是浏览器公开配置。不要添加管理员密码、数据库密码、Supabase secret/service_role 或任何账户 Token。
 
-Cloudflare Pages 构建环境提供 `CF_PAGES`；缺少 Supabase 配置时构建会主动失败，防止将本地演示稿发布为正式资料。已连接的正式构建不包含 `demo-data.json`。
+Cloudflare Pages 构建环境提供 `CF_PAGES`；正式构建会拒绝演示模式、私密密钥和不完整的项目覆盖值。无覆盖值时使用默认公开项目配置，正式构建不包含 `demo-data.json`。
 
 ## 发布及连接验证
 

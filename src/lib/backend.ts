@@ -1,23 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Archive } from "./model";
+import type { SiteConfig } from "../../config/resolve-site";
 
-const url = import.meta.env.VITE_SUPABASE_URL;
-const key = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
-if (key?.startsWith("sb_secret_"))
-  throw new Error("禁止在浏览器配置 Supabase 私密密钥");
-if (key?.split(".").length === 3) {
-  try {
-    if (
-      JSON.parse(atob(key.split(".")[1].replace(/-/g, "+").replace(/_/g, "/")))
-        .role === "service_role"
-    )
-      throw new Error("禁止在浏览器使用 service_role");
-  } catch (e) {
-    if (e instanceof Error && e.message.includes("service_role")) throw e;
-  }
-}
-export const supabase = url && key ? createClient(url, key) : null;
-export const demo = !supabase;
+declare const __ATLAS_SITE_CONFIG__: SiteConfig;
+const site = __ATLAS_SITE_CONFIG__;
+export const demo = site.demo;
+export const supabase = demo
+  ? null
+  : createClient(site.supabaseUrl, site.supabasePublishableKey);
 export async function loadArchives(): Promise<Archive[]> {
   if (!supabase) {
     const r = await fetch("/demo-data.json");

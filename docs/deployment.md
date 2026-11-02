@@ -28,14 +28,14 @@ insert into public.site_admins(user_id) values ('实际管理员 UUID');
 
 1. 在 Vercel 新建项目，通过其 GitHub 集成授权 `seasick-pig/atlas_of_looking-` 仓库。
 2. Framework 选择 **Vite**，Root Directory 为仓库根目录；Node.js 24；Install Command 为 `npm ci`，Build Command 为 `npm run build`，Output Directory 为 `dist`。仓库的 `vercel.json` 已提供构建和安全响应头。
-3. 为 Production 与需要连接真实数据库的 Preview 配置：
+3. 本网站已在 `config/public-site.json` 保存默认项目的公开连接配置，无需为同一项目重复填写环境变量。若需覆盖为其他 Supabase 项目，为 Production 与相应 Preview 成对配置：
 
 | 变量                            | 内容                           |
 | ------------------------------- | ------------------------------ |
 | `VITE_SUPABASE_URL`             | `https://你的项目.supabase.co` |
 | `VITE_SUPABASE_PUBLISHABLE_KEY` | 该项目的 publishable/anon key  |
 
-4. 点击 Deploy。缺少云端配置时构建会失败，避免把演示稿误部署成正式资料库。**更改 Vite 配置值后需重新部署。**正式构建不会生成 `demo-data.json`，仓库中的种子文件不作为网站静态文件发布。
+4. 点击 Deploy。未填写覆盖变量时使用默认公开项目配置；演示模式或不完整／不安全的覆盖配置会使正式构建失败。**更改连接配置后需重新部署。**正式构建不会生成 `demo-data.json`，仓库中的种子文件不作为网站静态文件发布。
 5. 将 Vercel 生产 URL 填入 Supabase Authentication → URL Configuration 的 Site URL。若使用后续密码重置／邮件链接，在 Redirect URLs 添加准确生产地址；本版使用邮箱密码登录，不会发起注册或密码重置邮件。忘记密码时由项目所有者在 Supabase 控制台处理。
 6. 自定义域名在 Vercel Domains 设置后，更新 Supabase Site URL。默认 CSP 允许 `*.supabase.co`；若改用 Supabase 自定义 API 域名，需同步修改 `vercel.json` 的 `connect-src`。
 
