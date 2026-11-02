@@ -1,0 +1,29 @@
+name: Verify archive
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build -- --logLevel error
+      - run: npx playwright install --with-deps chromium
+      - name: Use the installed Chromium
+        run: |
+          node --input-type=module <<'JS'
+          import { chromium } from '@playwright/test';
+          import { appendFileSync } from 'node:fs';
+          appendFileSync(process.env.GITHUB_ENV, `CHROMIUM_PATH=${chromium.executablePath()}\n`);
+          JS
+      - run: npm run test:e2e
+      - run: npm run test:cloud
