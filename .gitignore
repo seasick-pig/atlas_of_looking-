@@ -10,3 +10,5 @@ backups/
 *.log
 
 *.tsbuildinfo
+.wrangler/
+.dev.vars*

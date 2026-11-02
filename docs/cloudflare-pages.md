@@ -2,6 +2,8 @@
 
 Vercel 账户验证无法完成时，可使用 Cloudflare Pages 的静态站点部署。本项目的代码、Supabase 数据、管理员和 JSON 格式保持兼容。
 
+如果已经成功创建 Workers 项目，无需删除或重建，可改按 [Workers 静态站点部署](cloudflare-workers.md) 继续完成配置。
+
 ## 创建 Pages 项目
 
 1. 打开 https://dash.cloudflare.com/ ，注册或登录 Cloudflare 账户，并按页面要求完成邮箱验证。

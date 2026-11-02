@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
+    "build:cloud": "tsc -b && vite build --mode cloud",
     "preview": "vite preview --host 0.0.0.0",
     "test": "vitest run",
     "test:e2e": "playwright test",
@@ -31,7 +32,8 @@
     "prettier": "3.9.10",
     "typescript": "5.9.3",
     "vite": "7.3.7",
-    "vitest": "5.0.5"
+    "vitest": "5.0.5",
+    "wrangler": "4.156.1"
   },
   "engines": {
     "node": ">=22.12.0"

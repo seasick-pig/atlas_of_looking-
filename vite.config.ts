@@ -34,7 +34,13 @@ export default defineConfig(({ mode }) => {
         );
     }
   }
-  if ((env.VERCEL || env.CF_PAGES) && !url)
+  if (
+    (mode === "cloud" ||
+      env.VERCEL ||
+      env.CF_PAGES ||
+      env.WORKERS_CI_WORKER_NAME) &&
+    !url
+  )
     throw new Error("Configure Supabase before deploying the public website.");
   const demo = !url;
   return {

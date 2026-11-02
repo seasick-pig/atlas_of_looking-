@@ -48,6 +48,8 @@ npm run test:e2e         # 桌面与手机 Chromium 交互
 
 如 Vercel 账户验证无法完成，也可按 [Cloudflare Pages 部署步骤](docs/cloudflare-pages.md) 使用同一仓库和 Supabase 项目。
 
+如果已经创建的是 Workers 项目，可按 [Cloudflare Workers 静态站点部署](docs/cloudflare-workers.md) 继续使用当前项目。
+
 - [数据库迁移](supabase/migrations/001_archive.sql)
 - [数据格式与未来 AI/API 接入](docs/data-format.md)
 - [完整备份与恢复](docs/backup.md)
