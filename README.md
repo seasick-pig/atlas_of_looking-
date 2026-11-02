@@ -46,6 +46,8 @@ npm run test:e2e         # 桌面与手机 Chromium 交互
 
 按 [部署步骤](docs/deployment.md) 创建 Supabase、导入 SQL、设置管理员，随后在 Vercel 连接本 GitHub 仓库。所有访问控制均由 PostgreSQL RLS 执行，不能靠隐藏按钮代替权限。
 
+如 Vercel 账户验证无法完成，也可按 [Cloudflare Pages 部署步骤](docs/cloudflare-pages.md) 使用同一仓库和 Supabase 项目。
+
 - [数据库迁移](supabase/migrations/001_archive.sql)
 - [数据格式与未来 AI/API 接入](docs/data-format.md)
 - [完整备份与恢复](docs/backup.md)

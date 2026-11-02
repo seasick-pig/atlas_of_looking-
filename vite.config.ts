@@ -34,7 +34,7 @@ export default defineConfig(({ mode }) => {
         );
     }
   }
-  if (env.VERCEL && !url)
+  if ((env.VERCEL || env.CF_PAGES) && !url)
     throw new Error("Configure Supabase before deploying the public website.");
   const demo = !url;
   return {
